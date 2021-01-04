@@ -1,8 +1,14 @@
 package com.company.StringManipulation;
 
+import java.util.function.IntConsumer;
+
 public class LCS {
     public static void main(String[] args){
         System.out.println(LCS("ABCE", "ABCDE"));
+        String something = "abc";
+        something.chars().forEach(value -> {
+
+        });
     }
 
     static int LCS(String x, String y){
