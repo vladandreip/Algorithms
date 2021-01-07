@@ -14,6 +14,9 @@ public class ThreeSum {
         //System.out.println(threeSum(numberArray));
         //System.out.println(threeSum(numberArray2));
         System.out.println(threeSum2(iabadoo));
+        System.out.println(threeSum3(iabadoo));
+        System.out.println(threeSum4(iabadoo));
+        System.out.println(threeSum4(new int[]{-1,-1,-1,-1,-1,2,2,2,2,2}));
 
 
 
@@ -87,7 +90,10 @@ public class ThreeSum {
         }
         return triplet;
     }
-
+    /**
+     * Puts all elements in a map and forms triplet with a + b + map.getElement(-(a + b))
+     * Marks duplicate elements and uses a set to retain unique triplets
+     */
     public static List<List<Integer>> threeSum2(int[] nums) {
         int countZero = 0;
         List<List<Integer>> solution = new ArrayList<>();
@@ -132,5 +138,91 @@ public class ThreeSum {
 
         return new ArrayList<>(triplets);
 
+    }
+
+    /**
+     * This is the brut-force dumbfukistan solution that exceeds time limit (obviously)
+     * O(n^2 logN) i would say or O(n ^ 3)
+     */
+    public static List<List<Integer>> threeSum3(int[] nums) {
+        Set<List<Integer>> solution = new HashSet<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length - 2; i++) {
+            for (int j = i + 1; j < nums.length - 1; j++) {
+                for (int k = j + 1; k < nums.length ; k++) {
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        solution.add(Arrays.asList(nums[i], nums[j],nums[k]));
+                        break;
+                    }
+                }
+            }
+        }
+
+        return new ArrayList<>(solution);
+    }
+
+    /**
+     * Simplest O(n ^ 2) solution
+     * also found a little optimization to this one: https://www.youtube.com/watch?v=-AMHUdZc9ss
+     */
+    public static List<List<Integer>> threeSum4(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Set<Pair> set = new HashSet<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+
+                int threeSum = nums[i] + nums[j] + nums[k];
+
+                if (nums[i] + nums[j] + nums[k] > 0) {
+                    k--;
+                } else if (threeSum < 0) {
+                    j++;
+                } else {
+                    if (!set.contains(new Pair(nums[i], nums[j]))) {
+                        res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                        set.add(new Pair(nums[i], nums[j]));
+                    }
+                    k--;
+                    j++;
+                }
+            }
+
+        }
+        return res;
+    }
+}
+
+class Pair {
+    private Integer firstElement, secondElement;
+
+    Pair(Integer a, Integer b) {
+        this.firstElement = a;
+        this.secondElement = b;
+    }
+
+    public Integer getFirstElement() {
+        return firstElement;
+    }
+
+    public Integer getSecondElement() {
+        return secondElement;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair pair = (Pair) o;
+        return Objects.equals(firstElement, pair.firstElement) &&
+                Objects.equals(secondElement, pair.secondElement);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstElement, secondElement);
     }
 }
