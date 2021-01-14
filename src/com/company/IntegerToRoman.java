@@ -4,8 +4,11 @@ import java.util.Arrays;
 
 //12
 public class IntegerToRoman {
+    /**
+     * Problem 12 - accepted
+     */
     public static void main(String[] args) {
-        System.out.println(intToRoman2(24));
+        System.out.println(intToRoman(24));
     }
 
     public static String intToRoman(int num) {
