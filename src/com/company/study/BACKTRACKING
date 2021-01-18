@@ -1,0 +1,4 @@
+Not necessarily an optimisation solution
+-BRUTE force finds all the possible solutions and selects desired solution per given constants
+-DP also uses brute force to find the OPTIMUM solution, either maximum or minimum
+-Backtracking also uses BRUTE FORCE
